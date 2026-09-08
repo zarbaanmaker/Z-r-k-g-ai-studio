@@ -1,472 +1,271 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ZARKING AI</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      -webkit-tap-highlight-color: transparent;
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    
+    body { 
+      background-color: #000000; 
+      color: #ffffff; 
+      display: flex; 
+      flex-direction: column; 
+      height: 100vh; 
     }
-
-    html, body {
-      height: 100dvh;
-      background-color: #000000;
-      color: #ffffff;
-      overflow: hidden;
-    }
-
-    /* Sidebar Drawer */
-    .sidebar-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      display: none; z-index: 99;
-    }
-
-    .sidebar {
-      position: fixed; top: 0; left: -280px;
-      width: 280px; height: 100%;
-      background-color: #0a0a0a; z-index: 100;
-      transition: left 0.25s ease;
-      display: flex; flex-direction: column;
-      padding: 14px; border-right: 1px solid #1c1c1c;
-    }
-
-    .sidebar.open, .sidebar-overlay.open { display: block; }
-    .sidebar.open { left: 0; }
-
-    .new-chat-btn {
-      display: flex; align-items: center; justify-content: space-between;
-      background-color: #161616; color: #fff;
-      padding: 12px 14px; border-radius: 8px; cursor: pointer;
-      font-size: 0.95rem; border: 1px solid #282828; margin-bottom: 16px;
-    }
-
-    .history-list { flex: 1; overflow-y: auto; }
-    .history-item {
-      padding: 10px 12px; border-radius: 6px; color: #a0a0a0;
-      font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 10px; margin-bottom: 4px;
-    }
-
-    .user-profile {
-      border-top: 1px solid #1c1c1c; padding-top: 12px;
-      display: flex; align-items: center; justify-content: space-between; cursor: pointer;
-    }
-
-    /* Top Navigation Header */
-    .app-layout { display: flex; flex-direction: column; height: 100dvh; position: relative; }
-
+    
+    /* Header Bar */
     .top-bar {
-      height: 52px; background-color: #000000;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 12px; border-bottom: 1px solid #141414; flex-shrink: 0;
+      height: 54px; 
+      background: #000000; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      padding: 0 16px; 
+      border-bottom: 1px solid #1a1a1a;
+    }
+    
+    .model-title { 
+      font-weight: 700; 
+      font-size: 1.1rem; 
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+    
+    .model-select { 
+      background: #121212; 
+      color: #007AFF; 
+      border: 1px solid #2c2c2e; 
+      border-radius: 8px; 
+      padding: 6px 10px; 
+      font-size: 0.85rem; 
+      font-weight: 600;
+      outline: none;
     }
 
-    .model-selector-wrapper {
-      position: relative;
-      display: flex; align-items: center;
+    /* Chat Area */
+    #chat-container { 
+      flex: 1; 
+      overflow-y: auto; 
+      padding: 16px; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 16px; 
+      background: #000000;
+    }
+    
+    .msg { 
+      max-width: 85%; 
+      padding: 12px 16px; 
+      border-radius: 18px; 
+      font-size: 0.95rem; 
+      line-height: 1.5; 
+      word-break: break-word;
+    }
+    
+    .msg.user { 
+      background: #1c1c1e; 
+      color: #ffffff; 
+      align-self: flex-end; 
+      border-bottom-right-radius: 4px;
+    }
+    
+    .msg.bot { 
+      background: #000000; 
+      color: #ffffff; 
+      align-self: flex-start; 
+      padding-left: 0;
+    }
+    
+    /* Action Buttons (Speaker / Copy) */
+    .msg-actions { 
+      display: flex; 
+      gap: 10px; 
+      margin-top: 10px; 
+    }
+    
+    .btn-icon { 
+      background: #1c1c1e; 
+      color: #007AFF; 
+      border: 1px solid #2c2c2e; 
+      padding: 6px 12px; 
+      border-radius: 16px; 
+      cursor: pointer; 
+      font-size: 0.8rem; 
+      font-weight: 600;
+      display: flex; 
+      align-items: center; 
+      gap: 6px; 
     }
 
-    .model-badge {
-      font-size: 0.95rem; font-weight: 600; color: #ffffff;
-      display: flex; align-items: center; gap: 6px; cursor: pointer;
-      background: #111; padding: 4px 10px; border-radius: 12px; border: 1px solid #222;
+    /* Input Bar */
+    .input-bar { 
+      padding: 12px 16px; 
+      background: #000000; 
+      border-top: 1px solid #1a1a1a; 
+      display: flex; 
+      gap: 10px; 
+      align-items: center; 
+    }
+    
+    .input-bar input { 
+      flex: 1; 
+      background: #1c1c1e; 
+      border: 1px solid #2c2c2e; 
+      color: #ffffff; 
+      padding: 12px 16px; 
+      border-radius: 24px; 
+      outline: none; 
+      font-size: 0.95rem;
     }
 
-    .model-dropdown {
-      position: absolute; top: 38px; left: 0;
-      background: #181818; border: 1px solid #2a2a2a; border-radius: 10px;
-      width: 200px; display: none; z-index: 102; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    .input-bar input::placeholder {
+      color: #8e8e93;
+    }
+    
+    /* Blue Buttons */
+    .mic-btn, .send-btn { 
+      background: #007AFF; 
+      color: #ffffff; 
+      border: none; 
+      width: 42px; 
+      height: 42px; 
+      border-radius: 50%; 
+      cursor: pointer; 
+      font-size: 1.1rem; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
     }
 
-    .model-dropdown.open { display: block; }
-
-    .model-option {
-      padding: 10px 14px; font-size: 0.85rem; color: #ccc; cursor: pointer;
-      display: flex; align-items: center; justify-content: space-between;
+    .mic-btn.active { 
+      background: #ff3b30; 
+      box-shadow: 0 2px 8px rgba(255, 59, 48, 0.4);
     }
-
-    .model-option:hover, .model-option.active { background: #252525; color: #fff; }
-
-    .icon-btn {
-      background: none; border: none; color: #ffffff;
-      font-size: 1.1rem; cursor: pointer; width: 36px; height: 36px;
-      display: flex; align-items: center; justify-content: center; border-radius: 6px;
-    }
-
-    /* Chat Container */
-    #chat-container {
-      flex: 1; overflow-y: auto; padding: 16px; padding-bottom: 90px;
-      display: flex; flex-direction: column; gap: 20px; background-color: #000000;
-    }
-
-    .message { display: flex; flex-direction: column; max-width: 100%; }
-    .message.user { align-items: flex-end; }
-    .message.bot { align-items: flex-start; }
-
-    .bubble {
-      max-width: 90%; padding: 12px 16px; border-radius: 18px;
-      font-size: 0.95rem; line-height: 1.5; word-break: break-word;
-    }
-
-    .message.user .bubble { background-color: #1a1a1a; color: #ffffff; border-bottom-right-radius: 4px; }
-    .message.bot .bubble { background-color: transparent; color: #e5e5e5; padding: 0; }
-
-    .msg-tools {
-      display: flex; gap: 12px; margin-top: 6px; color: #777777; font-size: 0.85rem;
-    }
-
-    .msg-tools i { cursor: pointer; }
-    .msg-tools i:hover { color: #ffffff; }
-
-    /* Input Area */
-    .input-area {
-      position: absolute; bottom: 0; left: 0; width: 100%;
-      background-color: #000000; padding: 10px 12px 16px 12px; border-top: 1px solid #141414;
-    }
-
-    .input-wrapper {
-      background-color: #121212; border: 1px solid #262626; border-radius: 24px;
-      display: flex; align-items: center; padding: 6px 10px; gap: 8px;
-    }
-
-    .input-wrapper input {
-      flex: 1; background: transparent; border: none; outline: none;
-      color: #ffffff; font-size: 0.95rem; padding: 8px 4px;
-    }
-
-    .mic-btn {
-      background: none; border: none; color: #888888; font-size: 1rem;
-      cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
-    }
-
-    .mic-btn.recording { color: #ff4444; animation: pulse 1s infinite; }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-      100% { transform: scale(1); }
-    }
-
-    .action-btn {
-      background-color: #ffffff; color: #000000; border: none;
-      width: 32px; height: 32px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;
-    }
-
-    /* Context Menu / Settings Modal */
-    .menu-modal {
-      position: fixed; top: 55px; right: 12px;
-      background: #181818; border: 1px solid #2a2a2a; border-radius: 12px;
-      padding: 8px 0; width: 180px; display: none; z-index: 101;
-    }
-
-    .menu-modal.open { display: block; }
-    .menu-item {
-      padding: 10px 16px; font-size: 0.9rem; color: #ddd;
-      display: flex; align-items: center; gap: 10px; cursor: pointer;
-    }
-    .menu-item:hover { background: #252525; color: #fff; }
   </style>
 </head>
 <body>
 
-  <!-- Overlay -->
-  <div class="sidebar-overlay" id="overlay" onclick="closeAllModals()"></div>
-
-  <!-- Settings Dropdown -->
-  <div class="menu-modal" id="menuModal">
-    <div class="menu-item" onclick="startNewChat()"><i class="fa-solid fa-plus"></i> New Chat</div>
-    <div class="menu-item" onclick="toggleSidebar()"><i class="fa-solid fa-gear"></i> Settings</div>
-    <div class="menu-item" onclick="clearChat()"><i class="fa-solid fa-trash"></i> Clear Chat</div>
+  <!-- Top Header -->
+  <div class="top-bar">
+    <span class="model-title">ZARKING AI</span>
+    <select class="model-select" id="modelSelect">
+      <option>Gemini 1.5 Flash 0.1</option>
+      <option>Gemini 1.5 Flash 0.2</option>
+      <option>Gemini 1.5 Flash 0.3</option>
+      <option>Gemini 1.5 Flash 0.4</option>
+      <option>Gemini 1.5 Flash 0.5</option>
+    </select>
   </div>
 
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <div class="new-chat-btn" onclick="startNewChat()">
-      <span><i class="fa-solid fa-plus"></i> New Chat</span>
-      <i class="fa-regular fa-pen-to-square"></i>
-    </div>
-
-    <div class="history-list">
-      <div class="history-item"><i class="fa-regular fa-message"></i> ZARKING AI Session</div>
-    </div>
-
-    <div class="user-profile" onclick="alert('ZARKING AI Settings')">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <div style="width: 32px; height: 32px; border-radius: 50%; background: #333; display: flex; align-items: center; justify-content: center; font-weight: bold;">Z</div>
-        <div>
-          <div style="font-weight: 600; font-size: 0.88rem;">Zarking Owner</div>
-          <div style="font-size: 0.75rem; color: #777;">Pro Account</div>
-        </div>
+  <!-- Chat Area -->
+  <div id="chat-container">
+    <div class="msg bot">
+      <div>नमस्ते! मैं आपकी क्या मदद कर सकता हूँ?</div>
+      <div class="msg-actions">
+        <button class="btn-icon" onclick="speakText('नमस्ते! मैं आपकी क्या मदद कर सकता हूँ?')">🔊 सुनें</button>
+        <button class="btn-icon" onclick="copyText('नमस्ते! मैं आपकी क्या मदद कर सकता हूँ?')">📋 कॉपी</button>
       </div>
-      <i class="fa-solid fa-gear" style="color: #777;"></i>
     </div>
   </div>
 
-  <!-- Main View -->
-  <div class="app-layout">
-
-    <!-- Top Navigation -->
-    <div class="top-bar">
-      <button class="icon-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
-      
-      <!-- Model Dropdown -->
-      <div class="model-selector-wrapper">
-        <div class="model-badge" onclick="toggleModelDropdown()">
-          ZARKING AI <span id="currentVersionLabel" style="font-size: 0.75rem; color: #aaa;">Flash 0.1 ▾</span>
-        </div>
-        <div class="model-dropdown" id="modelDropdown">
-          <div class="model-option active" onclick="selectModel('Flash 0.1')">Gemini 1.5 Flash 0.1 <i class="fa-solid fa-check"></i></div>
-          <div class="model-option" onclick="selectModel('Flash 0.2')">Gemini 1.5 Flash 0.2</div>
-          <div class="model-option" onclick="selectModel('Flash 0.3')">Gemini 1.5 Flash 0.3</div>
-          <div class="model-option" onclick="selectModel('Flash 0.4')">Gemini 1.5 Flash 0.4</div>
-          <div class="model-option" onclick="selectModel('Flash 0.5')">Gemini 1.5 Flash 0.5</div>
-        </div>
-      </div>
-
-      <div style="display: flex; gap: 4px;">
-        <button class="icon-btn" onclick="startNewChat()"><i class="fa-regular fa-pen-to-square"></i></button>
-        <button class="icon-btn" onclick="toggleMenuModal()"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-      </div>
-    </div>
-
-    <!-- Chat Container -->
-    <div id="chat-container">
-      <div class="message bot">
-        <div class="bubble">How can I help you today?</div>
-      </div>
-    </div>
-
-    <!-- Input Bar -->
-    <div class="input-area">
-      <div class="input-wrapper">
-        <button class="mic-btn" id="micBtn" onclick="toggleVoiceRecognition()"><i class="fa-solid fa-microphone"></i></button>
-        <input type="text" id="userInput" placeholder="Message ZARKING AI..." onkeypress="handleKeyPress(event)">
-        <button class="action-btn" id="actionBtn" onclick="handleAction()"><i class="fa-solid fa-arrow-up"></i></button>
-      </div>
-    </div>
-
+  <!-- Input Area with Blue Buttons -->
+  <div class="input-bar">
+    <button class="mic-btn" id="micBtn" onclick="startListening()" title="बोलकर लिखें">🎤</button>
+    <input type="text" id="userInput" placeholder="Message ZARKING AI..." onkeypress="if(event.key==='Enter') sendMessage()">
+    <button class="send-btn" onclick="sendMessage()">➔</button>
   </div>
 
   <script>
-    let currentAbortController = null;
-    let recognition = null;
-    let isRecording = false;
-    let selectedVersion = "Flash 0.1";
-
-    function toggleModelDropdown() {
-      document.getElementById('modelDropdown').classList.toggle('open');
-    }
-
-    function selectModel(version) {
-      selectedVersion = version;
-      document.getElementById('currentVersionLabel').innerText = version + ' ▾';
-      
-      const options = document.querySelectorAll('.model-option');
-      options.forEach(opt => {
-        if (opt.innerText.includes(version)) {
-          opt.className = 'model-option active';
-          opt.innerHTML = `Gemini 1.5 ${version} <i class="fa-solid fa-check"></i>`;
-        } else {
-          opt.className = 'model-option';
-          opt.innerText = `Gemini 1.5 ${opt.innerText.replace('Gemini 1.5 ', '').replace(' ✔', '')}`;
-        }
-      });
-
-      document.getElementById('modelDropdown').classList.remove('open');
-    }
-
-    function toggleSidebar() {
-      closeAllModals();
-      document.getElementById('sidebar').classList.toggle('open');
-      document.getElementById('overlay').classList.toggle('open');
-    }
-
-    function toggleMenuModal() {
-      document.getElementById('menuModal').classList.toggle('open');
-      document.getElementById('overlay').classList.toggle('open');
-    }
-
-    function closeAllModals() {
-      document.getElementById('sidebar').classList.remove('open');
-      document.getElementById('menuModal').classList.remove('open');
-      document.getElementById('modelDropdown').classList.remove('open');
-      document.getElementById('overlay').classList.remove('open');
-    }
-
-    function clearChat() {
-      document.getElementById('chat-container').innerHTML = `
-        <div class="message bot">
-          <div class="bubble">Chat cleared. How can I help you?</div>
-        </div>
-      `;
-      closeAllModals();
-    }
-
-    function startNewChat() {
-      if (currentAbortController) {
-        currentAbortController.abort();
-        currentAbortController = null;
-      }
-      setSendButtonState(false);
-      clearChat();
-    }
-
-    function handleAction() {
-      if (currentAbortController) {
-        currentAbortController.abort();
-        currentAbortController = null;
-        setSendButtonState(false);
-      } else {
-        sendMessage();
-      }
-    }
-
+    // Send Message Function
     async function sendMessage() {
-      const inputEl = document.getElementById('userInput');
-      const text = inputEl.value.trim();
+      const input = document.getElementById('userInput');
+      const text = input.value.trim();
       if (!text) return;
 
       appendMessage(text, 'user');
-      inputEl.value = '';
+      input.value = '';
 
-      const botMsgId = appendMessage('...', 'bot');
-      setSendButtonState(true);
-
-      currentAbortController = new AbortController();
+      const botMsgDiv = appendMessage('सोच रहा हूँ...', 'bot');
 
       try {
-        const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(text)}?model=openai`, {
-          signal: currentAbortController.signal
-        });
-
-        if (!response.ok) throw new Error("API Error");
-
-        const data = await response.text();
-        document.getElementById(botMsgId).innerText = data;
-        addToolsToBotMessage(botMsgId, data);
-      } catch (error) {
-        if (error.name === 'AbortError') {
-          document.getElementById(botMsgId).innerText = "[Generation Stopped]";
-        } else {
-          document.getElementById(botMsgId).innerText = `Hello Zarking! I am active using ${selectedVersion}. How can I assist you today?`;
-        }
-      } finally {
-        currentAbortController = null;
-        setSendButtonState(false);
+        const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(text)}`);
+        const data = await res.text();
+        
+        botMsgDiv.innerHTML = `
+          <div>${escapeHtml(data)}</div>
+          <div class="msg-actions">
+            <button class="btn-icon" onclick="speakText(\`${data.replace(/`/g, '')}\`)">🔊 सुनें</button>
+            <button class="btn-icon" onclick="copyText(\`${data.replace(/`/g, '')}\`)">📋 कॉपी</button>
+          </div>
+        `;
+      } catch (err) {
+        botMsgDiv.innerHTML = `<div>नमस्ते ज़ार्किंग! मैं एक्टिव हूँ, बताइए क्या काम है?</div>`;
       }
     }
 
-    function addToolsToBotMessage(msgId, fullText) {
-      const bubble = document.getElementById(msgId);
-      const toolsDiv = document.createElement('div');
-      toolsDiv.className = 'msg-tools';
-      
-      const safeText = fullText.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-      toolsDiv.innerHTML = `
-        <i class="fa-solid fa-volume-high" title="Listen" onclick="speakText('${safeText}')"></i>
-        <i class="fa-regular fa-copy" title="Copy" onclick="copyText('${safeText}')"></i>
-      `;
-      bubble.appendChild(toolsDiv);
+    function appendMessage(text, type) {
+      const container = document.getElementById('chat-container');
+      const div = document.createElement('div');
+      div.className = `msg ${type}`;
+      div.innerHTML = `<div>${escapeHtml(text)}</div>`;
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+      return div;
     }
 
+    // Text to Speech
     function speakText(text) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'hi-IN';
         window.speechSynthesis.speak(utterance);
       } else {
-        alert("Text-to-speech not supported on this browser.");
+        alert("आपका फ़ोन वॉइस आउटपुट सपोर्ट नहीं कर रहा है।");
       }
     }
 
+    // Copy Text
     function copyText(text) {
       navigator.clipboard.writeText(text);
-      alert("Copied to clipboard!");
+      alert("कॉपी हो गया!");
     }
 
-    /* Voice Input */
-    function toggleVoiceRecognition() {
-      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        alert("Voice input is not supported in this browser.");
+    // Speech to Text (Microphone)
+    function startListening() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        alert("कृपया Google Chrome का इस्तेमाल करें।");
         return;
       }
 
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      const micBtn = document.getElementById('micBtn');
 
-      if (!recognition) {
-        recognition = new SpeechRecognition();
-        recognition.continuous = false;
-        recognition.interimResults = false;
+      recognition.onstart = function() {
+        micBtn.classList.add('active');
+      };
 
-        recognition.onstart = function() {
-          isRecording = true;
-          document.getElementById('micBtn').classList.add('recording');
-        };
+      recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('userInput').value = transcript;
+        micBtn.classList.remove('active');
+      };
 
-        recognition.onresult = function(event) {
-          const transcript = event.results[0][0].transcript;
-          document.getElementById('userInput').value = transcript;
-        };
+      recognition.onerror = function() { micBtn.classList.remove('active'); };
+      recognition.onend = function() { micBtn.classList.remove('active'); };
 
-        recognition.onerror = stopRecording;
-        recognition.onend = stopRecording;
-      }
-
-      if (isRecording) {
-        recognition.stop();
-        stopRecording();
-      } else {
-        recognition.start();
-      }
-    }
-
-    function stopRecording() {
-      isRecording = false;
-      document.getElementById('micBtn').classList.remove('recording');
-    }
-
-    function setSendButtonState(isGenerating) {
-      const btn = document.getElementById('actionBtn');
-      if (isGenerating) {
-        btn.className = 'action-btn';
-        btn.innerHTML = '<i class="fa-solid fa-square" style="font-size: 0.75rem;"></i>';
-      } else {
-        btn.className = 'action-btn';
-        btn.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
-      }
-    }
-
-    function appendMessage(text, sender) {
-      const container = document.getElementById('chat-container');
-      const msgDiv = document.createElement('div');
-      msgDiv.className = `message ${sender}`;
-      const msgId = 'msg-' + Date.now();
-
-      msgDiv.innerHTML = `<div class="bubble" id="${msgId}">${escapeHtml(text)}</div>`;
-
-      container.appendChild(msgDiv);
-      container.scrollTop = container.scrollHeight;
-      return msgId;
-    }
-
-    function handleKeyPress(e) {
-      if (e.key === 'Enter') sendMessage();
+      recognition.start();
     }
 
     function escapeHtml(str) {
-      return String(str).replace(/[&<>"']/g, function(s) {
-        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s];
-      });
+      return String(str).replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s]));
     }
   </script>
 </body>
-    </html>
-          
+</html>
+
