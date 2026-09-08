@@ -3,28 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ZARKING AI Movie & Creation Studio</title>
+  <title>ZARKING AI STUDIO</title>
 
-  <!-- FontAwesome Mobile Icons -->
+  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    /* ==========================================================================
-       ZARKING DARK THEME & STYLES
-       ========================================================================== */
     :root {
-      --bg-main: #07080c;
-      --bg-header: #0f1017;
-      --bg-card: #161822;
-      --bg-input: #1f2230;
-      --accent-color: #6366f1;
-      --zarking-purple: #a855f7;
-      --pro-gold: #ffb700;
-      --pro-gradient: linear-gradient(135deg, #a855f7 0%, #ff3300 100%);
-      --text-white: #ffffff;
-      --text-dim: #94a3b8;
-      --user-msg-bg: #272a3b;
-      --border-dark: #232636;
+      --bg-main: #0b0f19;
+      --bg-header: #111827;
+      --bg-card: #1f2937;
+      --bg-input: #111827;
+      --zarking-purple: #8b5cf6;
+      --text-white: #f9fafb;
+      --text-dim: #9ca3af;
+      --user-msg-bg: #374151;
+      --border-dark: #374151;
     }
 
     * {
@@ -46,21 +40,20 @@
 
     /* Top App Bar */
     .mobile-app-bar {
-      height: 60px;
+      height: 55px;
       background: var(--bg-header);
       border-bottom: 1px solid var(--border-dark);
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
-      z-index: 100;
+      flex-shrink: 0;
     }
 
     .app-title {
-      font-size: 1.2rem;
-      font-weight: 900;
-      letter-spacing: 1px;
-      background: linear-gradient(90deg, #a855f7, #3b82f6, #ff007f);
+      font-size: 1.1rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #a855f7, #3b82f6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       display: flex;
@@ -68,145 +61,32 @@
       gap: 8px;
     }
 
-    .icon-btn {
-      background: none;
-      border: none;
-      color: var(--text-white);
-      font-size: 1.3rem;
-      padding: 8px;
-      cursor: pointer;
-    }
-
-    /* Mobile Drawer Sidebar */
-    .mobile-drawer {
-      position: fixed;
-      top: 0;
-      left: -100%;
-      width: 82%;
-      max-width: 320px;
-      height: 100%;
-      background: var(--bg-header);
-      border-right: 1px solid var(--border-dark);
-      z-index: 1000;
-      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    .mode-tabs {
       display: flex;
-      flex-direction: column;
-      padding: 20px 16px;
-      box-shadow: 10px 0 30px rgba(0,0,0,0.9);
-    }
-
-    .mobile-drawer.open { left: 0; }
-
-    .drawer-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.8);
-      z-index: 999;
-      display: none;
-    }
-
-    .drawer-overlay.active { display: block; }
-
-    .drawer-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin: 20px 0;
-    }
-
-    .menu-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-dark);
-      border-radius: 14px;
-      color: var(--text-white);
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: left;
-    }
-
-    .menu-item.active {
-      border-color: var(--zarking-purple);
-      background: var(--user-msg-bg);
-      color: var(--zarking-purple);
-    }
-
-    .pro-tag {
-      background: var(--pro-gradient);
-      color: #fff;
-      font-size: 0.65rem;
-      font-weight: 900;
-      padding: 2px 6px;
-      border-radius: 4px;
-      margin-left: auto;
-    }
-
-    /* Controls Panel */
-    .voice-control-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border-dark);
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .voice-control-box label {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      display: flex;
-      align-items: center;
       gap: 6px;
+      padding: 8px 12px;
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border-dark);
+      overflow-x: auto;
+      flex-shrink: 0;
     }
 
-    .voice-control-box select {
-      background: var(--bg-main);
+    .tab-btn {
+      background: var(--bg-card);
       border: 1px solid var(--border-dark);
-      color: #fff;
-      padding: 10px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      outline: none;
-      width: 100%;
-    }
-
-    /* ZARKING Pro Card */
-    .pro-mobile-card {
-      margin-top: auto;
-      background: linear-gradient(180deg, rgba(168,85,247,0.1) 0%, rgba(255,51,0,0.15) 100%);
-      border: 1px dashed var(--zarking-purple);
-      border-radius: 16px;
-      padding: 14px;
-      text-align: center;
-    }
-
-    .pro-mobile-card h4 {
-      color: #c084fc;
-      font-size: 0.95rem;
-      margin-bottom: 4px;
-    }
-
-    .pro-mobile-card p {
-      font-size: 0.75rem;
       color: var(--text-dim);
-      margin-bottom: 10px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
     }
 
-    .btn-mobile-pro {
-      width: 100%;
-      background: var(--pro-gradient);
-      border: none;
+    .tab-btn.active {
+      background: var(--zarking-purple);
       color: #fff;
-      padding: 10px;
-      border-radius: 10px;
-      font-weight: 800;
-      font-size: 0.85rem;
+      border-color: var(--zarking-purple);
     }
 
     /* Chat Viewport */
@@ -216,14 +96,14 @@
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
       -webkit-overflow-scrolling: touch;
     }
 
     .msg-row {
       display: flex;
       gap: 10px;
-      max-width: 90%;
+      max-width: 92%;
       align-items: flex-start;
     }
 
@@ -248,60 +128,92 @@
     .user .avatar { background: var(--user-msg-bg); color: #fff; }
     .bot .avatar { background: var(--zarking-purple); color: #fff; }
 
+    .msg-content {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-width: 100%;
+    }
+
     .msg-bubble {
       background: var(--bg-card);
-      padding: 12px 16px;
-      border-radius: 18px;
-      font-size: 0.92rem;
-      line-height: 1.5;
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-size: 0.9rem;
+      line-height: 1.4;
       color: var(--text-white);
       border: 1px solid var(--border-dark);
+      word-break: break-word;
     }
 
     .user .msg-bubble {
-      background: var(--user-msg-bg);
+      background: var(--zarking-purple);
       border-top-right-radius: 2px;
       border-color: transparent;
     }
 
     .bot .msg-bubble { border-top-left-radius: 2px; }
 
-    .msg-bubble img {
+    .msg-bubble img, .msg-bubble video {
       width: 100%;
-      border-radius: 12px;
-      margin-top: 10px;
+      border-radius: 10px;
+      margin-top: 8px;
     }
+
+    /* Action Buttons Under Bot Messages */
+    .msg-actions {
+      display: flex;
+      gap: 12px;
+      padding-left: 4px;
+    }
+
+    .action-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .action-btn:hover, .action-btn.active { color: var(--text-white); }
 
     /* Bottom Input Bar */
     .bottom-input-area {
-      padding: 10px 12px;
+      padding: 8px 12px 12px 12px;
       background: var(--bg-header);
       border-top: 1px solid var(--border-dark);
+      flex-shrink: 0;
     }
 
     .input-box-wrapper {
       background: var(--bg-input);
       border: 1px solid var(--border-dark);
-      border-radius: 25px;
-      padding: 4px 6px 4px 12px;
+      border-radius: 24px;
+      padding: 4px 6px 4px 10px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
-    .btn-plus-attach {
-      background: var(--bg-card);
-      border: 1px solid var(--border-dark);
-      color: #fff;
-      width: 36px;
-      height: 36px;
+    .icon-input-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1rem;
+      cursor: pointer;
       flex-shrink: 0;
     }
+
+    .icon-input-btn:active { color: var(--zarking-purple); }
 
     #mobile-input {
       flex: 1;
@@ -310,135 +222,50 @@
       outline: none;
       color: #fff;
       font-size: 0.95rem;
+      padding: 8px 0;
     }
 
     .btn-submit-send {
       background: var(--zarking-purple);
       border: none;
       color: #fff;
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       flex-shrink: 0;
-    }
-
-    /* Modal System */
-    .modal-box {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.85);
-      z-index: 2000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .modal-inner {
-      background: var(--bg-header);
-      border: 1px solid var(--zarking-purple);
-      width: 100%;
-      max-width: 340px;
-      border-radius: 20px;
-      padding: 22px;
-      text-align: center;
-    }
-
-    .code-input-field {
-      width: 100%;
-      background: var(--bg-main);
-      border: 1px solid var(--border-dark);
-      color: #fff;
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 1.1rem;
-      text-align: center;
-      letter-spacing: 3px;
-      margin: 15px 0;
-    }
-
-    .btn-redeem-now {
-      width: 100%;
-      background: var(--pro-gradient);
-      border: none;
-      color: #fff;
-      padding: 12px;
-      border-radius: 10px;
-      font-weight: 800;
-      font-size: 0.95rem;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <!-- File Upload Input -->
-  <input type="file" id="mobile-file-upload" style="display: none;" onchange="onFileSelected(event)">
+  <!-- Hidden File Input -->
+  <input type="file" id="file-upload" style="display: none;" onchange="handleFileUpload(event)">
 
-  <div class="drawer-overlay" id="overlay" onclick="closeDrawer()"></div>
-
-  <!-- ZARKING Top Header -->
+  <!-- Header -->
   <header class="mobile-app-bar">
-    <button class="icon-btn" onclick="openDrawer()"><i class="fa-solid fa-bars-staggered"></i></button>
-    <div class="app-title"><i class="fa-solid fa-crown"></i> ZARKING AI</div>
-    <button class="icon-btn" onclick="openProModal()"><i class="fa-solid fa-gem" style="color: #c084fc;"></i></button>
+    <div class="app-title"><i class="fa-solid fa-bolt"></i> ZARKING AI STUDIO</div>
   </header>
 
-  <!-- Sidebar -->
-  <aside class="mobile-drawer" id="drawer">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-      <span style="font-weight: 800; font-size: 1.1rem; color: var(--zarking-purple);">ZARKING Menu</span>
-      <button class="icon-btn" onclick="closeDrawer()"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-
-    <div class="drawer-menu">
-      <button class="menu-item active" onclick="selectMode('chat', this)">
-        <i class="fa-solid fa-comments"></i> ZARKING Chat
-      </button>
-      <button class="menu-item" onclick="selectMode('image', this)">
-        <i class="fa-solid fa-palette"></i> ZARKING Photos
-      </button>
-      <button class="menu-item" onclick="selectMode('movie', this)">
-        <i class="fa-solid fa-film"></i> 2-Hour Movie AI <span class="pro-tag">PRO</span>
-      </button>
-    </div>
-
-    <div class="voice-control-box">
-      <label><i class="fa-solid fa-microphone"></i> Movie Voice (आवाज़):</label>
-      <select id="voice-select">
-        <option value="male">Male Deep Voice (पुरुष)</option>
-        <option value="female">Female Soft Voice (महिला)</option>
-        <option value="child">Anime Voice</option>
-      </select>
-
-      <label><i class="fa-solid fa-globe"></i> World Language (भाषा):</label>
-      <select id="lang-select">
-        <option value="Hindi">Hindi (हिंदी)</option>
-        <option value="English">English</option>
-        <option value="Urdu">Urdu (उर्दू)</option>
-        <option value="Arabic">Arabic (العربية)</option>
-        <option value="Spanish">Spanish (Español)</option>
-        <option value="French">French (Français)</option>
-        <option value="All World Languages">All 100+ Languages</option>
-      </select>
-    </div>
-
-    <div class="pro-mobile-card">
-      <h4 id="pro-card-head"><i class="fa-solid fa-crown"></i> ZARKING PRO Plan</h4>
-      <p id="pro-card-sub">कोड '4172' दर्ज करके मुफ़्त 2 महीने पाएँ!</p>
-      <button class="btn-mobile-pro" onclick="openProModal()">Enter Secret Code</button>
-    </div>
-  </aside>
+  <!-- Navigation Tabs -->
+  <div class="mode-tabs">
+    <button class="tab-btn active" onclick="setMode('chat', this)"><i class="fa-solid fa-comments"></i> AI Chat</button>
+    <button class="tab-btn" onclick="setMode('image', this)"><i class="fa-solid fa-image"></i> HD Photo</button>
+    <button class="tab-btn" onclick="setMode('video', this)"><i class="fa-solid fa-video"></i> 10s Video Clip</button>
+  </div>
 
   <!-- Chat Viewport -->
   <main id="chat-viewport">
     <div class="msg-row bot">
-      <div class="avatar"><i class="fa-solid fa-bolt"></i></div>
-      <div class="msg-bubble">
-        स्वागत है! यह <b>ZARKING AI STUDIO</b> है। यहाँ आप दुनिया की किसी भी भाषा में चैट कर सकते हैं, HD फोटोज़ बना सकते हैं और 2 घंटे की पूरी AI मूवी वॉइस-ओवर के साथ जनरेट कर सकते हैं!
+      <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+      <div class="msg-content">
+        <div class="msg-bubble">
+          नमस्ते! मैं <b>ZARKING AI</b> हूँ। आप मुझसे बात कर सकते हैं, HD फोटोज़ बना सकते हैं और 10 सेकंड की AI वीडियो क्लिप्स जनरेट कर सकते हैं।
+        </div>
       </div>
     </div>
   </main>
@@ -446,154 +273,150 @@
   <!-- Input Bar -->
   <div class="bottom-input-area">
     <div class="input-box-wrapper">
-      <button class="btn-plus-attach" onclick="openFilePicker()"><i class="fa-solid fa-plus"></i></button>
-      <input type="text" id="mobile-input" placeholder="ZARKING AI से कुछ भी पूछें..." onkeypress="onKeyPress(event)">
-      <button class="btn-submit-send" onclick="sendMobileMsg()"><i class="fa-solid fa-paper-plane"></i></button>
-    </div>
-  </div>
-
-  <!-- Redeem Modal -->
-  <div class="modal-box" id="secretModal">
-    <div class="modal-inner">
-      <i class="fa-solid fa-crown" style="font-size: 2.2rem; color: #c084fc;"></i>
-      <h3 style="margin-top: 8px;">ZARKING PRO Activation</h3>
-      <p style="font-size: 0.78rem; color: var(--text-dim); margin-top: 4px;">Enter Promo Code:</p>
-
-      <input type="text" id="secret-code-input" class="code-input-field" placeholder="4172" maxlength="6">
-
-      <button class="btn-redeem-now" onclick="redeemCode()">Activate ZARKING PRO</button>
-      <button style="background:none; border:none; color:var(--text-dim); margin-top:12px; font-size:0.8rem;" onclick="closeProModal()">Close</button>
+      <button class="icon-input-btn" onclick="document.getElementById('file-upload').click()"><i class="fa-solid fa-plus"></i></button>
+      <button class="icon-input-btn" onclick="startVoiceRecognition()"><i class="fa-solid fa-microphone" id="mic-icon"></i></button>
+      <input type="text" id="mobile-input" placeholder="ZARKING AI से बात करें..." onkeypress="onKeyPress(event)">
+      <button class="btn-submit-send" onclick="handleSend()"><i class="fa-solid fa-paper-plane"></i></button>
     </div>
   </div>
 
   <script>
     let activeMode = 'chat';
-    let isProUser = false;
-    const SECRET_CODE = "4172";
+    let lastUserPrompt = '';
 
-    function openDrawer() {
-      document.getElementById('drawer').classList.add('open');
-      document.getElementById('overlay').classList.add('active');
-    }
-
-    function closeDrawer() {
-      document.getElementById('drawer').classList.remove('open');
-      document.getElementById('overlay').classList.remove('active');
-    }
-
-    function openProModal() {
-      document.getElementById('secretModal').style.display = 'flex';
-      closeDrawer();
-    }
-
-    function closeProModal() {
-      document.getElementById('secretModal').style.display = 'none';
-    }
-
-    function openFilePicker() {
-      document.getElementById('mobile-file-upload').click();
-    }
-
-    function onFileSelected(e) {
-      const file = e.target.files[0];
-      if (file) {
-        appendMessage(`📁 File Attached: <b>${file.name}</b>`, 'user');
-        appendMessage(`<b>ZARKING System:</b> फाइल <b>${file.name}</b> प्रोसेस हो गई है!`, 'bot');
-      }
-    }
-
-    function redeemCode() {
-      const inputVal = document.getElementById('secret-code-input').value.trim();
-      if (inputVal === SECRET_CODE) {
-        isProUser = true;
-        document.getElementById('pro-card-head').innerHTML = `<i class="fa-solid fa-circle-check" style="color:#00ff00;"></i> ZARKING PRO Active`;
-        document.getElementById('pro-card-sub').innerText = "2 Months Free Access Unlocked!";
-        alert("🎉 ZARKING PRO Activated! आपका 2 महीने का मुफ़्त एक्सेस चालू हो चुका है!");
-        closeProModal();
-      } else {
-        alert("गलत कोड! सही कोड '4172' दर्ज करें।");
-      }
-    }
-
-    function selectMode(mode, btnEl) {
+    function setMode(mode, btn) {
       activeMode = mode;
-      document.querySelectorAll('.menu-item').forEach(b => b.classList.remove('active'));
-      btnEl.classList.add('active');
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
 
       const input = document.getElementById('mobile-input');
-      if (mode === 'chat') input.placeholder = 'ZARKING AI से कुछ भी पूछें...';
-      if (mode === 'image') input.placeholder = 'कैसी AI फोटो बनानी है?...';
-      if (mode === 'movie') input.placeholder = '2 घंटे की मूवी का टॉपिक/कहानी लिखें...';
-
-      closeDrawer();
+      if (mode === 'chat') input.placeholder = 'ZARKING AI से बात करें...';
+      if (mode === 'image') input.placeholder = 'कैसी HD फोटो बनानी है?...';
+      if (mode === 'video') input.placeholder = '10 सेकंड की वीडियो क्लिप का टॉपिक लिखें...';
     }
 
-    function onKeyPress(e) { if (e.key === 'Enter') sendMobileMsg(); }
+    function onKeyPress(e) { if (e.key === 'Enter') handleSend(); }
 
-    function appendMessage(text, sender, imgUrl = null) {
+    function appendUserMessage(text) {
       const viewport = document.getElementById('chat-viewport');
       const row = document.createElement('div');
-      row.className = `msg-row ${sender}`;
-
-      const icon = sender === 'user' ? '<i class="fa-solid fa-user"></i>' : '<i class="fa-solid fa-bolt"></i>';
-      let imgHTML = imgUrl ? `<br><img src="${imgUrl}" alt="ZARKING Content">` : '';
-
-      row.innerHTML = `<div class="avatar">${icon}</div><div class="msg-bubble">${text} ${imgHTML}</div>`;
+      row.className = 'msg-row user';
+      row.innerHTML = `
+        <div class="avatar"><i class="fa-solid fa-user"></i></div>
+        <div class="msg-content">
+          <div class="msg-bubble">${escapeHtml(text)}</div>
+        </div>
+      `;
       viewport.appendChild(row);
       viewport.scrollTop = viewport.scrollHeight;
     }
 
-    async function sendMobileMsg() {
+    function appendBotMessage(contentHTML) {
+      const viewport = document.getElementById('chat-viewport');
+      const row = document.createElement('div');
+      row.className = 'msg-row bot';
+      const msgId = 'msg-' + Date.now();
+
+      row.innerHTML = `
+        <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+        <div class="msg-content">
+          <div class="msg-bubble" id="${msgId}">${contentHTML}</div>
+          <div class="msg-actions">
+            <button class="action-btn" onclick="copyMessage('${msgId}')"><i class="fa-solid fa-copy"></i> Copy</button>
+            <button class="action-btn" onclick="retryLastMessage()"><i class="fa-solid fa-rotate-right"></i> Retry</button>
+            <button class="action-btn" onclick="toggleLike(this)"><i class="fa-solid fa-thumbs-up"></i></button>
+            <button class="action-btn" onclick="toggleDislike(this)"><i class="fa-solid fa-thumbs-down"></i></button>
+          </div>
+        </div>
+      `;
+      viewport.appendChild(row);
+      viewport.scrollTop = viewport.scrollHeight;
+      return msgId;
+    }
+
+    async function handleSend() {
       const inputEl = document.getElementById('mobile-input');
       const txt = inputEl.value.trim();
       if (!txt) return;
 
-      appendMessage(txt, 'user');
+      lastUserPrompt = txt;
+      appendUserMessage(txt);
       inputEl.value = '';
 
       if (activeMode === 'chat') {
-        appendMessage("ZARKING AI सोच रहा है...", 'bot');
-        const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(txt)}`);
-        const replyText = await res.text();
-        document.getElementById('chat-viewport').lastChild.remove();
-        appendMessage(replyText, 'bot');
+        const loadingId = appendBotMessage("<i>सोच रहा हूँ...</i>");
+        try {
+          const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(txt)}`);
+          const reply = await res.text();
+          document.getElementById(loadingId).innerText = reply;
+        } catch (err) {
+          document.getElementById(loadingId).innerText = "क्षमा करें, सर्वर से संपर्क नहीं हो सका। कृपया पुनः प्रयास करें।";
+        }
       } 
       else if (activeMode === 'image') {
-        appendMessage("ZARKING Photo Generator काम कर रहा है...", 'bot');
-        const img = `https://image.pollinations.ai/prompt/${encodeURIComponent(txt)}?width=1024&height=1024&seed=${Math.floor(Math.random()*99999)}`;
-        document.getElementById('chat-viewport').lastChild.remove();
-        appendMessage("यह रही आपकी ZARKING HD फोटो:", 'bot', img);
+        const imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(txt)}?width=1024&height=1024&seed=${Math.floor(Math.random()*99999)}`;
+        appendBotMessage(`यहाँ आपकी HD फोटो है:<br><img src="${imgUrl}" alt="AI Photo">`);
       } 
-      else if (activeMode === 'movie') {
-        if (!isProUser) {
-          appendMessage("🔒 <b>ZARKING PRO Locked:</b> 2 घंटे की मूवी के लिए कोड <b>4172</b> का इस्तेमाल करें!", 'bot');
-          openProModal();
-          return;
-        }
-
-        const voice = document.getElementById('voice-select').value;
-        const lang = document.getElementById('lang-select').value;
-
-        appendMessage(`🎬 <b>ZARKING MOVIE STUDIO ACTIVE:</b><br>• Title: <b>${txt.toUpperCase()}</b><br>• Voice: <b>${voice.toUpperCase()}</b><br>• Language: <b>${lang}</b><br><br><i>2 घंटे की मूवी प्रोसेस हो रही है...</i>`, 'bot');
-
-        setTimeout(() => {
-          const resultBox = `
-            <div style="border:1px solid var(--zarking-purple); padding:12px; border-radius:12px; background:rgba(168,85,247,0.08);">
-              <h4 style="color:#c084fc;">🎬 ZARKING Full 2-Hour Movie Ready!</h4>
-              <p style="font-size:0.8rem; margin-top:5px;"><b>Voice:</b> ${voice} Voice Sync Completed</p>
-              <p style="font-size:0.8rem;"><b>Language:</b> ${lang}</p>
-              <hr style="margin:8px 0; border-color:var(--border-dark);">
-              <p style="font-size:0.78rem;">✔ 120 Mins High Quality Render Complete</p>
-              <br>
-              <button style="width:100%; background:var(--pro-gradient); border:none; padding:10px; border-radius:8px; font-weight:bold; color:#fff; cursor:pointer;" onclick="alert('Downloading ZARKING Movie File (.MP4)...')">📥 Download 2-Hour Movie File</button>
-            </div>
-          `;
-          document.getElementById('chat-viewport').lastChild.remove();
-          appendMessage(resultBox, 'bot');
-        }, 3000);
+      else if (activeMode === 'video') {
+        const videoUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(txt)}?width=1024&height=576&seed=${Math.floor(Math.random()*99999)}&model=video`;
+        appendBotMessage(`🎬 10 सेकंड की AI वीडियो क्लिप जनरेट हो रही है...<br><img src="${videoUrl}" alt="AI Video Preview">`);
       }
+    }
+
+    function handleFileUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        appendUserMessage(`📁 अपलोड की गई फाइल: ${file.name}`);
+        appendBotMessage(`फाइल <b>${escapeHtml(file.name)}</b> प्राप्त हो गई है!`);
+      }
+    }
+
+    function startVoiceRecognition() {
+      if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'hi-IN';
+
+        const micIcon = document.getElementById('mic-icon');
+        micIcon.style.color = '#ef4444';
+
+        recognition.onresult = function(event) {
+          const transcript = event.results[0][0].transcript;
+          document.getElementById('mobile-input').value = transcript;
+          micIcon.style.color = '';
+        };
+
+        recognition.onerror = function() { micIcon.style.color = ''; };
+        recognition.onend = function() { micIcon.style.color = ''; };
+
+        recognition.start();
+      } else {
+        alert("आपके ब्राउज़र में वॉइस टाइपिंग सपोर्ट उपलब्ध नहीं है।");
+      }
+    }
+
+    function copyMessage(id) {
+      const text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text);
+      alert("मैसेज कॉपी हो गया!");
+    }
+
+    function retryLastMessage() {
+      if (lastUserPrompt) {
+        document.getElementById('mobile-input').value = lastUserPrompt;
+        handleSend();
+      }
+    }
+
+    function toggleLike(btn) { btn.classList.toggle('active'); }
+    function toggleDislike(btn) { btn.classList.toggle('active'); }
+
+    function escapeHtml(string) {
+      return String(string).replace(/[&<>"']/g, function(s) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s];
+      });
     }
   </script>
 </body>
   </html>
-  
+      
